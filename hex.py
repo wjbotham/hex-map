@@ -46,6 +46,9 @@ def printout(hexes):
         text += line+"\n"
     print(text)
 
+def printout_key(hexes, key):
+    return map(lambda cell: hexes[cell][key],hexes.keys())
+
 def generate(area):
     land_hexes = [(0,0)]
     for i in range(area-1):
@@ -53,4 +56,12 @@ def generate(area):
         land_hexes.append(choice(boundary))
     return land_hexes
 
-printout(generate(150))
+def generate_grid_with_contents(min_x,max_x,min_y,max_y):
+    hexes = {}
+    for x in range(min_x,max_x+1):
+        for y in range(min_y,max_y+1):
+            if (x+y) % 2 == 0:
+                hexes[(x,y)] = { "algae": 1 }
+    return hexes
+
+printout(filter_grid(generate_grid_with_contents(0,10,0,10), "algae"))
